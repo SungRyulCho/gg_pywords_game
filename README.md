@@ -39,12 +39,6 @@ uv sync
 uv run python wordgame.py
 ```
 
-실행 파일 이름이 `wordgame.py`라면 아래처럼 실행합니다.
-
-```bash
-uv run python wordgame.py
-```
-
 ## 사용 방법
 
 1. 화면에 제시된 영어 단어를 확인합니다.
