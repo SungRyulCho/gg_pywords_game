@@ -1,3 +1,5 @@
+import json
+from deep_translator import GoogleTranslator
 from pygame import mixer
 import random
 import time
@@ -15,12 +17,39 @@ def wordLoad():
 
     return words
 
+TRANSLATION_FILE = "data/word_meanings.json"
+translator = GoogleTranslator(source="en", target="ko")
+
+def loadMeanings():
+    try:
+        with open(TRANSLATION_FILE,"r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+
+
+def getMeaning(word, meanings):
+    if word in meanings:
+        return  meanings[word]
+
+    try:
+        meaning = translator.translate(word)
+        meanings[word] = meaning
+
+        with open(TRANSLATION_FILE,"w", encoding="utf-8") as f:
+            json.dump(meanings, f, ensure_ascii=False, indent=2)
+
+        return meaning
+    except Exception:
+        return "번역을 가져오지 못했습니다."
+
+
 def playSound(file_path):
     mixer.music.load(file_path)
     mixer.music.play()
 
 
-def gameRun(words):
+def gameRun(words, meanings):
     correct_count = 0
     start_time = time.time()
 
@@ -37,6 +66,8 @@ def gameRun(words):
         else:
             print("오답")
             playSound("assets/bad.wav")
+
+        print(f"뜻:{getMeaning(question, meanings)}")
 
     elapsed_time = time.time() - start_time
     return correct_count, elapsed_time
@@ -59,6 +90,8 @@ def saveResult(elapsed_time, score):
 
 
 words = wordLoad()
-score, elapsed_time = gameRun(words)
+meanings = loadMeanings()
+
+score, elapsed_time = gameRun(words, meanings)
 scorePrint(score, elapsed_time)
 saveResult(elapsed_time, score)
