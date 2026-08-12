@@ -88,10 +88,10 @@ def saveResult(elapsed_time, score):
     with open("word_game_score.csv","a",encoding="utf-8") as f:
         f.write(f"{elapsed_time:},{score}\n")
 
+if __name__ == "__main__":
+    words = wordLoad()
+    meanings = loadMeanings()
 
-words = wordLoad()
-meanings = loadMeanings()
-
-score, elapsed_time = gameRun(words, meanings)
-scorePrint(score, elapsed_time)
-saveResult(elapsed_time, score)
+    score, elapsed_time = gameRun(words, meanings)
+    scorePrint(score, elapsed_time)
+    saveResult(elapsed_time, score)
