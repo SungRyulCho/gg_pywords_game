@@ -219,5 +219,5 @@ __marimo__/
 
 #wordgame
 word.txt
-word_game_score_csv
+word_game_score.csv
 word_meanings.json
