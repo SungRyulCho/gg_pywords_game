@@ -216,3 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+#wordgame
+word.txt
+word_gmae_score_csv
